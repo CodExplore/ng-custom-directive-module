@@ -13,7 +13,7 @@
 			templateUrl: 'found.html',
 			scope: {
 				foundItem: '<',
-				onRemove: '&'
+				onRemove: '&',
 			},
 			controller: NarrowItDownController,
 			controllerAs: 'narrow',
@@ -27,14 +27,16 @@
 
 	function NarrowItDownController(MenuSearchService) {
 		var narrow = this;
-
 		narrow.getItems = function () {
 			narrow.found.length = 0;
+			narrow.processed = 1;
 			if (narrow.searchTerm !== "") {
 				MenuSearchService.getMatchedMenuItems(narrow.searchTerm.toLowerCase());
 			}
+			return true;
 		};
 		narrow.found = MenuSearchService.getFoundItems();
+
 		narrow.removeItem = function (narrowIndex) {
 			MenuSearchService.removeItem(narrowIndex);
 		}
